@@ -6,7 +6,7 @@
 /*   By: ncortigi <ncortigi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:44:02 by ncortigi          #+#    #+#             */
-/*   Updated: 2023/05/05 16:57:31 by ncortigi         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:58:04 by ncortigi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@ int	ft_write_and_return(char *str, int ret)
 
 void	print(char *str, t_phi *philo)
 {
-	if (philo->data->dead == 0)
+	pthread_mutex_lock(&philo->data->dead_mu);
+	if (philo->data->dead == 0 || \
+		philo->data->finished == philo->data->n_philo)
 	{
 		pthread_mutex_lock(&philo->data->print);
 		printf("%ld    %d %s\n", get_time(philo->data->start), \
 			philo->whitch, str);
 		pthread_mutex_unlock(&philo->data->print);
 	}
+	pthread_mutex_unlock(&philo->data->dead_mu);
 }

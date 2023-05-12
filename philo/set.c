@@ -6,13 +6,13 @@
 /*   By: ncortigi <ncortigi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:03:36 by ncortigi          #+#    #+#             */
-/*   Updated: 2023/05/05 17:29:56 by ncortigi         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:27:27 by ncortigi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	allocate(t_data *data)
+int	allocate(t_data *data)
 {
 	data->tid = malloc(sizeof(pthread_t) * data->n_philo);
 	if (!data->tid)
@@ -44,6 +44,7 @@ int	ft_set(int ac, char **av, t_data *data)
 		data->n_meals = -1;
 	if (!allocate(data))
 		return (0);
+	pthread_mutex_init(&data->eat_mu, NULL);
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->dead_mu, NULL);
 	pthread_mutex_init(&data->meal, NULL);
@@ -77,7 +78,8 @@ void	set_forks_and_phi(t_data *data)
 	while (++i < data->n_philo)
 		pthread_mutex_init(&data->forks[i], NULL);
 	data->philos[0].r_fork = &data->forks[0];
-	data->philos[0].l_fork = &data->forks[data->n_philo - 1];
+	if (data->n_philo != 1)
+		data->philos[0].l_fork = &data->forks[data->n_philo - 1];
 	i = 1;
 	while (i < data->n_philo)
 	{

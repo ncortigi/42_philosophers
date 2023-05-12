@@ -6,22 +6,22 @@
 /*   By: ncortigi <ncortigi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:10:59 by ncortigi          #+#    #+#             */
-/*   Updated: 2023/05/05 17:29:13 by ncortigi         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:40:46 by ncortigi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <sys/time.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
 
 struct	s_data;
 
-typedef struct	s_phi
+typedef struct s_phi
 {
 	struct s_data	*data;
 	pthread_mutex_t	lock;
@@ -34,12 +34,13 @@ typedef struct	s_phi
 	pthread_mutex_t	*l_fork;
 }	t_phi;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	pthread_mutex_t	lock;
-	pthread_mutex_t print;
-	pthread_mutex_t dead_mu;
-	pthread_mutex_t meal;
+	pthread_mutex_t	print;
+	pthread_mutex_t	dead_mu;
+	pthread_mutex_t	meal;
+	pthread_mutex_t	eat_mu;
 	long int		start;
 	int				finished;
 	int				dead;
@@ -62,6 +63,7 @@ int			ft_atoi(const char *nptr);
 int			ft_set(int ac, char **av, t_data *data);
 void		set_forks_and_phi(t_data *data);
 void		*check_death(void *pointer);
+int			control_death(t_phi *philo);
 void		*living(void *pointer);
 void		ft_close(t_data *data);
 

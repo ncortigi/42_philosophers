@@ -6,7 +6,7 @@
 /*   By: ncortigi <ncortigi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 12:30:13 by ncortigi          #+#    #+#             */
-/*   Updated: 2023/05/04 14:22:44 by ncortigi         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:37:45 by ncortigi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_args(int ac, char **av)
 {
 	int	i;
 	int	j;
-	
+
 	if (ac != 5 && ac != 6)
 		return (0);
 	i = 1;
